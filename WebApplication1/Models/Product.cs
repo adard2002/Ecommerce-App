@@ -5,10 +5,7 @@ using System.Threading.Tasks;
 
 namespace WebApplication1.Models
 {
-    public class Admin
+    public class Product
     {
-        public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
     }
 }

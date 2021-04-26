@@ -23,6 +23,7 @@ namespace WebApplication1.Controllers
             return View();
         }
 
+        [HttpGet("Privacy")]
         public IActionResult Privacy()
         {
             return View();

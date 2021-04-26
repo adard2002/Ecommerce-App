@@ -7,30 +7,27 @@ using System.Threading.Tasks;
 
 namespace WebApplication1.Models
 {
-    public class AdminController : Controller
+    public class CategoryController : Controller
     {
-        // ====== TODO: As an admin user, I would like to have a dashboard where I can see a list of product categories ======
-        // GET: UnicornController 
+        // GET: CategoryController
         public ActionResult Index()
         {
             return View();
         }
 
-        // ====== TODO: As an admin user, I would like to see a list of the products assigned to a category on the category details page ======
-        // ====== TODO: As an admin user, I would like a detail page for each product so that I can eventually edit its data or delete it ======
-        // GET: UnicornController/Details/5
+        // GET: CategoryController/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: UnicornController/Create
+        // GET: CategoryController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: UnicornController/Create
+        // POST: CategoryController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -45,15 +42,13 @@ namespace WebApplication1.Models
             }
         }
 
-
-        // ====== TODO: As an admin user, I would like to view a detail page for each category so that I can eventually edit its data or delete it ======
-        // GET: UnicornController/Edit/5
+        // GET: CategoryController/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: UnicornController/Edit/5
+        // POST: CategoryController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -68,13 +63,13 @@ namespace WebApplication1.Models
             }
         }
 
-        // GET: UnicornController/Delete/5
+        // GET: CategoryController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: UnicornController/Delete/5
+        // POST: CategoryController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
