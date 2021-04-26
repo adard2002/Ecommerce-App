@@ -2,7 +2,7 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 body {
-    background: rgb(160, 120, 255);
+    background-color: rgb(160, 120, 255);
 }
 
 a.navbar-brand {
