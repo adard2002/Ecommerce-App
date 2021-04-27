@@ -24,11 +24,26 @@ namespace WebApplication1.Controllers
         public async Task<IActionResult> RegisterAsync(RegisterData data)
         {
             await userService.Register(data, ModelState);
+            if (!ModelState.IsValid)
+            {
+                return View(data);
+            }
+
             return RedirectToAction(nameof(Welcome));
         }
 
         [HttpGet("Welcome")]
         public IActionResult Welcome()
+        {
+            return View();
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        public IActionResult Index()
         {
             return View();
         }

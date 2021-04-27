@@ -27,13 +27,16 @@
                         <li>
                             @if (User.Identity.IsAuthenticated)
                             {
+                                <li>
                                 <span>Welcome back!</span>
-                            }
-                            else
-                            {
+                                </li>
+                                <li>
                                 <a class="nav-link" asp-controller="Account" asp-action="Register">Register</a>
+                                </li>
+                                <li>
+                                    <a class="nav-link" asp-controller="Account" asp-action="Login">Login</a>
+                                </li>
                             }
-                        </li>
                     </ul>
                 </div>
             </div>

@@ -6,6 +6,6 @@ namespace WebApplication1.Services.Identity
 {
     public interface IUserService
     {
-        Task Register(RegisterData data, ModelStateDictionary modelState);
+        Task<ApplicationUser> Register(RegisterData data, ModelStateDictionary modelState);
     }
 }
