@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication1.Data;
+using WebApplication1.Models.Identity;
 using WebApplication1.Services.Identity;
 
 namespace WebApplication1
@@ -33,6 +34,10 @@ namespace WebApplication1
 
                 options.UseSqlServer(cs);
             });
+
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+                .AddEntityFrameworkStores<AppContextDbContext>()
+                .AddDefaultTokenProviders();
 
             services.AddScoped<IUserService, IdentityUserService>();
 
