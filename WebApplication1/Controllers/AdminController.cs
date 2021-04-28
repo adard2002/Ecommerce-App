@@ -13,7 +13,16 @@ namespace WebApplication1.Models
         // GET: UnicornController 
         public ActionResult Index()
         {
-            return View();
+            var admin = new[] {
+            new Admin
+                {
+                    Id = 1,
+                    Email = "Owner",
+                    UserName = "Adard2002",
+                    Password = "Yesn't"
+                },
+            };
+            return View(admin);
         }
 
         // ====== TODO: As an admin user, I would like to see a list of the products assigned to a category on the category details page ======
