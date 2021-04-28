@@ -1,124 +1,160 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApplication1.Data;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
     public class ProductController : Controller
     {
-        public ActionResult Index()
+
+        private readonly AppDbContext _context;
+
+        public ProductController(AppDbContext context)
         {
-            var products = new[]
-            {
-                new Product
-                {
-                    Id = 1,
-                    Name = "Chicken strips",
-                },
-                new Product
-                {
-                    Id = 2,
-                    Name = "Breakfast Pizza"
-                },
-                new Product
-                {
-                    Id = 3,
-                    Name = "Memes!"
-                },
-                new Product
-                {
-                    Id = 3,
-                    Name = "Video Gam0rr"
-                },
-            };
-            return View(products);
+            _context = context;
         }
 
-        // GET: ProductController/Details/5
-        public ActionResult Details(int id)
+        // GET: HomeController1
+        public async Task<IActionResult> IndexAsync()
         {
-            var product = new Product
-            {
-                Id = id,
-                Name = "NANIII?",
-            };
-            return base.View(product);
+            return View(await _context.Products.ToListAsync());
         }
 
-        // GET: ProductsController/Create
+        // GET: HomeController1/Details/5
+        public async Task<IActionResult> DetailsAsync(int? id)
+        {
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var product = await _context.Products
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
+        }
+
+        // GET: HomeController1/Create
         public ActionResult Create()
         {
             return View();
         }
 
+        // POST: HomeController1/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create([Bind("Id, Name")] Product product)
         {
-            try
+            if (ModelState.IsValid)
             {
+                _context.Add(product);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(product);
+            
         }
 
-        public ActionResult Edit(int id)
+        // GET: HomeController1/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
-            var product = new Product
+
+            if (id == null)
             {
-                Id = id,
-                Name = "Uhhh Edit?",
-            };
+                return NotFound();
+            }
+
+            var product = await _context.Products.FindAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
             return View(product);
         }
 
-        // POST: ProductsController/Edit/5
+        // POST: HomeController1/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("Id, Name")] Product product)
         {
-            try
+            if (id != product.Id)
             {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(product);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ProductExists(product.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(product);
+            
         }
 
-        // GET: ProductsController/Delete/5
-        public ActionResult Delete(int id)
+
+
+        // GET: HomeController1/Delete/5
+        public async Task<IActionResult> Delete(int? id)
         {
-            var product = new Product
+
+            if (id == null)
             {
-                Id = id,
-                Name = "Delete Me",
-            };
-            return View();
+                return NotFound();
+            }
+
+            var product = await _context.Products
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
         }
 
-        // POST: ProductController/Delete/5
-        [HttpPost]
+        // POST: HomeController1/Delete/5
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+            var product = await _context.Products.FindAsync(id);
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
 
+        }
+        private bool ProductExists(int id)
+        {
+            return _context.Product.Any(e => e.Id == id);
+        }
     }
 }
