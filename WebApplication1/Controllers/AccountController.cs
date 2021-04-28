@@ -38,7 +38,7 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        public async Task<IActionResult> LoginAsync()
+        public async Task<IActionResult> LoginAsync(LoginData data)
         {
             if (!ModelState.IsValid)
             {
