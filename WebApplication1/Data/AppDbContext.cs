@@ -13,5 +13,6 @@ namespace WebApplication1.Data
         public AppDbContext(DbContextOptions options) : base(options)
         {
         }
+        public DbSet<WebApplication1.Models.Product> Product { get; set; }
     }
 }

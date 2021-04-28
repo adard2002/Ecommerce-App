@@ -38,9 +38,21 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        public IActionResult Login()
+        public async Task<IActionResult> LoginAsync()
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                return View(data);
+            }
+
+            if (!await userService.SignIn(data))
+            {
+                ModelState.AddModelError(nameof(LoginData.Password), "Email or Password was incorrect.");
+
+                return View(data);
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Index()
