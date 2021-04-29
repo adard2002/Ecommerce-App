@@ -34,7 +34,7 @@ namespace WebApplication1.Models
 
             var Category = await _context.Categories
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (course == null)
+            if (Category == null)
             {
                 return NotFound();
             }
@@ -139,8 +139,8 @@ namespace WebApplication1.Models
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var category = await _context.Category.FindAsync(id);
-            _context.Category.Remove(category);
+            var category = await _context.Categories.FindAsync(id);
+            _context.Categories.Remove(category);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

@@ -78,27 +78,19 @@ namespace WebApplication1.Controllers
             return RedirectToAction(nameof(IndexAsync));
         }
 
-        public async Task<IActionResult> IndexAsync()
+        public ActionResult IndexAsync()
         {
-            var user = await userService.GetCurrentUser();
-
-            var model = new AccountIndexViewModel
-            {
-                User = user,
-                Profiles = new List<object> { null },
-            };
-
-            return View(model);
+            return View();
         }
 
         [HttpPost]
-                public async Task<IActionResult> UploadProfile(IFormFile profileImage)
+        public async Task<IActionResult> UploadProfile(IFormFile profileImage)
         {
             string url = await fileService.Upload(profileImage);
 
             await userService.SetCurrentProfileImageUrl(url);
 
             return RedirectToAction(nameof(Index));
-
+        }
     }
 }
