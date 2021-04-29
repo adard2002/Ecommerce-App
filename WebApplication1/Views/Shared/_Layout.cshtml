@@ -24,20 +24,26 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Product">Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Category">Category</a>
+                        </li>
                         <li>
                             @if (User.Identity.IsAuthenticated)
                             {
-                                <li>
+                            <li>
                                 <a class="nav-link" asp-controller="Account" asp-action="Index">Account</a>
-                                </li>
-                                <li>
+                            </li>
+                            <li>
                                 <a class="nav-link" asp-controller="Account" asp-action="Register">Register</a>
-                                </li>
-                                <li>
-                                    <a class="nav-link" asp-controller="Account" asp-action="Login">Login</a>
-                                </li>
-                            }
-                    </ul>
+                            </li>
+                            <li>
+                                <a class="nav-link" asp-controller="Account" asp-action="Login">Login</a>
+                            </li>
+                        }
+                        </ul>
                 </div>
             </div>
         </nav>

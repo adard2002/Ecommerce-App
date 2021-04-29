@@ -10,5 +10,7 @@ namespace WebApplication1.Services.Identity
 
         Task<bool> SignIn(LoginData data);
         Task<bool> SignIn(object data);
+        Task GetCurrentUser();
+        Task SetCurrentProfileImageUrl(string url);
     }
 }

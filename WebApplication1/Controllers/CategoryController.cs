@@ -6,9 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication1.Data;
-using WebApplication1.Models;
 
-namespace WebApplication1.Controllers
+namespace WebApplication1.Models
 {
     public class CategoryController : Controller
     {
@@ -19,29 +18,28 @@ namespace WebApplication1.Controllers
             _context = context;
         }
 
-
         // GET: CategoryController
-        public async Task<IActionResult> Index()
+        public async Task<ActionResult> Index()
         {
             return View(await _context.Categories.ToListAsync());
         }
 
-
         // GET: CategoryController/Details/5
-        public async Task<ActionResult> Details(int? id)
+        public async Task<ActionResult> DetailsAsync(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Categories
+            var Category = await _context.Categories
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
+            if (course == null)
             {
                 return NotFound();
             }
-            return View(category);
+
+            return View(Category);
         }
 
         // GET: CategoryController/Create
@@ -53,7 +51,7 @@ namespace WebApplication1.Controllers
         // POST: CategoryController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Category category)
+        public async Task<IActionResult> Create([Bind("Id,CourseCode,Price")] Category category)
         {
             if (ModelState.IsValid)
             {
@@ -61,19 +59,18 @@ namespace WebApplication1.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-                return View(category);
-            
+            return View(category);
         }
 
         // GET: CategoryController/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Category.FindAsync(id);
+            var category = await _context.Categories.FindAsync(id);
             if (category == null)
             {
                 return NotFound();
@@ -84,7 +81,7 @@ namespace WebApplication1.Controllers
         // POST: CategoryController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Category category)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CourseCode,Price")] Category category)
         {
             if (id != category.Id)
             {
@@ -109,14 +106,15 @@ namespace WebApplication1.Controllers
                         throw;
                     }
                 }
-                    return RedirectToAction(nameof(Index));
-                
+                return RedirectToAction(nameof(Index));
             }
-                return View();
-            
+            return View(category);
         }
 
-
+        private bool CategoryExists(int id)
+        {
+            return _context.Categories.Any(e => e.Id == id);
+        }
 
         // GET: CategoryController/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -126,12 +124,13 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Category
+            var category = await _context.Categories
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {
                 return NotFound();
             }
+
             return View(category);
         }
 
@@ -142,12 +141,10 @@ namespace WebApplication1.Controllers
         {
             var category = await _context.Category.FindAsync(id);
             _context.Category.Remove(category);
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CategoryExists(int id)
-        {
-            return _context.Category.Any(e => e.Id == id);
-        }
+
     }
 }

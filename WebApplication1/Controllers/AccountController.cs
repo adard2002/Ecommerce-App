@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,8 @@ namespace WebApplication1.Controllers
     public class AccountController : Controller
     {
         private readonly IUserService userService;
-        public AccountController(IUserService userService)
+        private readonly IFileService fileService;
+        public AccountController(IUserService userService, IFileService fileService)
         {
             this.userService = userService;
         }
@@ -23,7 +25,14 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public async Task<IActionResult> RegisterAsync(RegisterData data)
         {
+            
+            if (!ModelState.IsValid)
+            {
+                return View(data);
+            }
+
             await userService.Register(data, ModelState);
+
             if (!ModelState.IsValid)
             {
                 return View(data);
@@ -38,7 +47,16 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        public async Task<IActionResult> LoginAsync(LoginData data)
+        public IActionResult Login(string returnUrl)
+        {
+            var model = new LoginData
+            {
+                ReturnUrl = returnUrl,
+            };
+            return View(model);
+        }
+
+        public async Task<IActionResult> Login(LoginData data)
         {
             if (!ModelState.IsValid)
             {
@@ -52,13 +70,35 @@ namespace WebApplication1.Controllers
                 return View(data);
             }
 
-            return RedirectToAction(nameof(Index));
+            if (Url.IsLocalUrl(data.ReturnUrl))
+            {
+                return LocalRedirect(data.ReturnUrl);
+            }
+
+            return RedirectToAction(nameof(IndexAsync));
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            return View();
+            var user = await userService.GetCurrentUser();
+
+            var model = new AccountIndexViewModel
+            {
+                User = user,
+                Profiles = new List<object> { null },
+            };
+
+            return View(model);
         }
+
+        [HttpPost]
+                public async Task<IActionResult> UploadProfile(IFormFile profileImage)
+        {
+            string url = await fileService.Upload(profileImage);
+
+            await userService.SetCurrentProfileImageUrl(url);
+
+            return RedirectToAction(nameof(Index));
 
     }
 }

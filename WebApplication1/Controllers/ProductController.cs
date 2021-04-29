@@ -154,7 +154,7 @@ namespace WebApplication1.Controllers
         }
         private bool ProductExists(int id)
         {
-            return _context.Product.Any(e => e.Id == id);
+            return _context.Products.Any(e => e.Id == id);
         }
     }
 }
