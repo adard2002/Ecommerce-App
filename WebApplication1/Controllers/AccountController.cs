@@ -80,18 +80,9 @@ namespace WebApplication1.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> Index()
+        public ActionResult Index()
         {
-            var user = await userService.GetCurrentUser();
-
-            var model = new AccountIndeViewModel
-            {
-                User = user,
-                Profiles = new List<object> { null },
-            };
-
-
-            return View(model);
+            return View();
         }
 
         [HttpPost]
