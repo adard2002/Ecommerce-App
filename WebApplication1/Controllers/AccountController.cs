@@ -77,12 +77,21 @@ namespace WebApplication1.Controllers
                 return LocalRedirect(data.ReturnUrl);
             }
 
-            return RedirectToAction(nameof(IndexAsync));
+            return RedirectToAction(nameof(Index));
         }
 
-        public ActionResult IndexAsync()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var user = await userService.GetCurrentUser();
+
+            var model = new AccountIndeViewModel
+            {
+                User = user,
+                Profiles = new List<object> { null },
+            };
+
+
+            return View(model);
         }
 
         [HttpPost]
