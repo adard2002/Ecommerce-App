@@ -19,9 +19,21 @@ namespace WebApplication1.Models
         }
 
         // GET: CategoryController
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            return View(await _context.Categories.ToListAsync());
+            var categories = new[] {
+            new Category
+                {
+                    Id = 1,
+                    Name = "Unicorns"
+                },
+                new Category
+                {
+                    Id = 2,
+                    Name = "Spooder",
+                },
+            };
+            return View(categories);
         }
 
         // GET: CategoryController/Details/5

@@ -43,12 +43,18 @@ namespace WebApplication1.Controllers
         public ActionResult Details(int id)
         {
 
-            var product = new Product
-            {
-                Id = id,
-                Name = "Uhhhhh",
+            var product = new[]{
+                new Product
+                {
+                    Id = id,
+                    Name = "Uhhhhh",
+                },
+                new Product
+                {
+                    Id = id,
+                    Name = "Lucas the spider has a fly friend"
+                },
             };
-
             return base.View(product);
         }
 
