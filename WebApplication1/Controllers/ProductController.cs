@@ -21,28 +21,41 @@ namespace WebApplication1.Controllers
         }
 
         // GET: HomeController1
-        public async Task<IActionResult> IndexAsync()
+        public ActionResult Index()
         {
-            return View(await _context.Products.ToListAsync());
+            var products = new[]{
+                new Product
+                {
+                    Id = 1,
+                    Name = "Charlie the unicorn",
+                },
+                new Product
+                {
+                    Id = 2,
+                    Name = "Lucas the spider",
+                },
+            };
+            return View(products);
         }
 
+
         // GET: HomeController1/Details/5
-        public async Task<IActionResult> DetailsAsync(int? id)
+        public ActionResult Details(int id)
         {
 
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var product = await _context.Products
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return View(product);
+            var product = new[]{
+                new Product
+                {
+                    Id = id,
+                    Name = "Uhhhhh",
+                },
+                new Product
+                {
+                    Id = id,
+                    Name = "Lucas the spider has a fly friend"
+                },
+            };
+            return base.View(product);
         }
 
         // GET: HomeController1/Create
@@ -54,107 +67,72 @@ namespace WebApplication1.Controllers
         // POST: HomeController1/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id, Name")] Product product)
+        public IActionResult Create([Bind("Id, Name")] Product product)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(product);
-                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            catch
+            {
+                return View();
+            }
 
-            return View(product);
-            
         }
 
         // GET: HomeController1/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int id)
         {
 
-            if (id == null)
+            var product = new Product
             {
-                return NotFound();
-            }
-
-            var product = await _context.Products.FindAsync(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
+                Id = id,
+                Name = "Edit this and stuff",
+            };
             return View(product);
         }
 
         // POST: HomeController1/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id, Name")] Product product)
+        public ActionResult Edit(int id, Product product)
         {
-            if (id != product.Id)
+            try
             {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(product);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ProductExists(product.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
                 return RedirectToAction(nameof(Index));
             }
-
-            return View(product);
-            
+            catch
+            {
+                return View();
+            }
         }
 
 
 
         // GET: HomeController1/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public ActionResult Delete(int id)
         {
-
-            if (id == null)
+            var product = new Product
             {
-                return NotFound();
-            }
-
-            var product = await _context.Products
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return View(product);
+                Id = id,
+                Name = "Delete this and stuff",
+            };
+            return View();
         }
 
         // POST: HomeController1/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public ActionResult Delete(int id, IFormCollection collection)
         {
-            var product = await _context.Products.FindAsync(id);
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-
-        }
-        private bool ProductExists(int id)
-        {
-            return _context.Product.Any(e => e.Id == id);
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }
