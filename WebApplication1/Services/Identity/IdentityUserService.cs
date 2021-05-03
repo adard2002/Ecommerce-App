@@ -58,5 +58,15 @@ namespace WebApplication1.Services.Identity
         {
             throw new NotImplementedException();
         }
+
+        Task IUserService.GetCurrentUser()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task IUserService.SetCurrentProfileImageUrl(string url)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -9,7 +9,6 @@ namespace WebApplication1.Services.Identity
         Task<ApplicationUser> Register(RegisterData data, ModelStateDictionary modelState);
 
         Task<bool> SignIn(LoginData data);
-        Task<bool> SignIn(object data);
         Task GetCurrentUser();
         Task SetCurrentProfileImageUrl(string url);
     }

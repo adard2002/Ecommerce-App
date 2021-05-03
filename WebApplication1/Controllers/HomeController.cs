@@ -29,11 +29,14 @@ namespace WebApplication1.Controllers
             return View();
         }
 
+        /*
+
+        [HttpGet("Product")]
         public IActionResult Products()
         {
             return View();
         }
-
+        */
         public IActionResult Categories()
         {
             return View();

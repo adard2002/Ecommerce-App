@@ -16,6 +16,7 @@ namespace WebApplication1.Controllers
         public AccountController(IUserService userService, IFileService fileService)
         {
             this.userService = userService;
+            this.fileService = fileService;
         }
         public IActionResult Register()
         {
@@ -47,6 +48,7 @@ namespace WebApplication1.Controllers
             return View();
         }
 
+        
         public IActionResult Login(string returnUrl)
         {
             var model = new LoginData
@@ -55,7 +57,7 @@ namespace WebApplication1.Controllers
             };
             return View(model);
         }
-
+        
         public async Task<IActionResult> Login(LoginData data)
         {
             if (!ModelState.IsValid)

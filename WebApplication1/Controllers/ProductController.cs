@@ -38,6 +38,7 @@ namespace WebApplication1.Controllers
             return View(products);
         }
 
+
         // GET: HomeController1/Details/5
         public ActionResult Details(int id)
         {
