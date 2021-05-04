@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using WebApplication1.Models.Identity;
 
@@ -12,11 +14,24 @@ namespace WebApplication1.Services.Identity
     {
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
-        public IdentityUserService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public IdentityUserService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IHttpContextAccessor httpContextAccessor)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.httpContextAccessor = httpContextAccessor;
+        }
+
+        public async Task<ApplicationUser> GetCurrentUser()
+        {
+            var principal = httpContextAccessor.HttpContext.User;
+            return await GetUser(principal);
+        }
+
+        public async Task<ApplicationUser> GetUser(ClaimsPrincipal principal)
+        {
+            return await userManager.GetUserAsync(principal);
         }
 
 
@@ -54,19 +69,16 @@ namespace WebApplication1.Services.Identity
             return result.Succeeded;
         }
 
-        public Task<bool> SignIn(object data)
+        Task<ApplicationUser> IUserService.GetUser(ClaimsPrincipal principal)
         {
             throw new NotImplementedException();
         }
 
-        Task IUserService.GetCurrentUser()
-        {
-            throw new NotImplementedException();
-        }
-
+        /*
         Task IUserService.SetCurrentProfileImageUrl(string url)
         {
             throw new NotImplementedException();
         }
+        */
     }
 }
