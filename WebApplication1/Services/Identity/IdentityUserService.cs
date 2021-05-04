@@ -74,11 +74,19 @@ namespace WebApplication1.Services.Identity
             throw new NotImplementedException();
         }
 
-        /*
-        Task IUserService.SetCurrentProfileImageUrl(string url)
+        
+        public async Task SetCurrentProfileImageUrl(string url)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(url))
+                throw new ArgumentException("Url is missing somewhere");
+
+            var user = await GetCurrentUser();
+            if (user == null) throw new InvalidOperationException("No current user");
+
+            user.ProfileImageUrl = url;
+            await userManager.UpdateAsync(user);
+
         }
-        */
+        
     }
 }

@@ -102,7 +102,7 @@ namespace WebApplication1.Controllers
         {
             string url = await fileService.Upload(profileImage);
 
-            // await userService.SetCurrentProfileImageUrl(url);
+            await userService.SetCurrentProfileImageUrl(url);
 
             return RedirectToAction(nameof(Index));
         }
