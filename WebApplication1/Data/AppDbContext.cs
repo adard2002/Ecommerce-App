@@ -15,7 +15,7 @@ namespace WebApplication1.Data
         {
         }
 
-        /*
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -38,7 +38,7 @@ namespace WebApplication1.Data
                  new Product { Id = 5, Name = "Frogger the Frogg" }
                 );
         }
-        */
+        
         public DbSet<Product> Products { get; set; }
 
         public DbSet<Category> Categories { get; set; }

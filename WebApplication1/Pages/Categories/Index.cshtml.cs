@@ -19,11 +19,11 @@ namespace WebApplication1.Pages.Categories
             _context = context;
         }
 
-        public IList<Category> Category { get;set; }
+        public IList<Category> Categories { get;set; }
 
         public async Task OnGetAsync()
         {
-            Category = await _context.Categories.ToListAsync();
+            Categories = await _context.Categories.ToListAsync();
         }
     }
 }
