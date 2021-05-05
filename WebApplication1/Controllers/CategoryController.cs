@@ -21,8 +21,10 @@ namespace WebApplication1.Models
         }
 
         // GET: CategoryController
-        public ActionResult Index()
+        public async Task<IActionResult> AdminList()
         {
+            return View("Index", await _context.Categories.ToListAsync());
+            /*
             var categories = new[] {
             new Category
                 {
@@ -36,6 +38,7 @@ namespace WebApplication1.Models
                 },
             };
             return View(categories);
+            */
         }
 
         // GET: CategoryController/Details/5
