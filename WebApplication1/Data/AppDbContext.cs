@@ -20,6 +20,8 @@ namespace WebApplication1.Data
         {
             base.OnModelCreating(builder);
 
+
+
             builder.Entity<Category>()
                 .HasData(
                 new Category { Id = 1, Name = "Big Cats" },
