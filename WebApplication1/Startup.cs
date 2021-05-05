@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApplication1.Controllers;
 using WebApplication1.Data;
 using WebApplication1.Models.Identity;
 using WebApplication1.Services.Identity;
@@ -42,7 +43,16 @@ namespace WebApplication1
 
             services.AddScoped<IUserService, IdentityUserService>();
 
+            if (Configuration[AzureFileService.AccountName_Key] != null)
+            {
+                services.AddSingleton<IFileService, AzureFileService>();
+            }
+            else
+            {
+                services.AddSingleton<IFileService, AdaraFileService>();
+            }
             services.AddControllersWithViews();
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,6 +78,8 @@ namespace WebApplication1
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapRazorPages();
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

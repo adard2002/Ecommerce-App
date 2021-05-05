@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication1.Models.Identity;
+using WebApplication1.Models.ViewModels;
 using WebApplication1.Services.Identity;
 
 namespace WebApplication1.Controllers
@@ -18,6 +20,7 @@ namespace WebApplication1.Controllers
             this.userService = userService;
             this.fileService = fileService;
         }
+
         public IActionResult Register()
         {
             return View();
@@ -58,6 +61,7 @@ namespace WebApplication1.Controllers
             return View(model);
         }
         
+        [HttpPost]
         public async Task<IActionResult> Login(LoginData data)
         {
             if (!ModelState.IsValid)
@@ -80,17 +84,16 @@ namespace WebApplication1.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var user = await userService.GetCurrentUser();
 
-            var model = new AccountIndeViewModel
+            var model = new AccountIndexViewModel
             {
                 User = user,
                 Profiles = new List<object> { null },
             };
-
-
             return View(model);
         }
 

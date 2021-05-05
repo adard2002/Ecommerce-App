@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,6 +10,7 @@ using WebApplication1.Data;
 
 namespace WebApplication1.Models
 {
+    [Authorize]
     public class CategoryController : Controller
     {
         private readonly AppDbContext _context;
@@ -123,10 +125,7 @@ namespace WebApplication1.Models
             return View(category);
         }
 
-        private bool CategoryExists(int id)
-        {
-            return _context.Categories.Any(e => e.Id == id);
-        }
+
 
         // GET: CategoryController/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -157,6 +156,9 @@ namespace WebApplication1.Models
             return RedirectToAction(nameof(Index));
         }
 
-
+        private bool CategoryExists(int id)
+        {
+            return _context.Categories.Any(e => e.Id == id);
+        }
     }
 }
