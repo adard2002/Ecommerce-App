@@ -6,6 +6,7 @@ namespace WebApplication1.Models.Identity
     {
         
         internal static string Administrator;
+
         internal static string Customer;
     }
 }
