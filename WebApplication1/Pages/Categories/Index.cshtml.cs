@@ -23,7 +23,7 @@ namespace WebApplication1.Pages.Categories
 
         public async Task OnGetAsync()
         {
-            Categories = await _context.Categories.ToListAsync();
+            Categories = await _context.Category.ToListAsync();
         }
     }
 }
