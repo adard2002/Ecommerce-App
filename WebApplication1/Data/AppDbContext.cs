@@ -29,6 +29,7 @@ namespace WebApplication1.Data
                 new Category { Id = 4, Name = "Arachnids"},
                 new Category { Id = 5, Name = "Reptiles"}
             );
+            /*
 
             builder.Entity<Product>()
                 .HasData(
@@ -37,8 +38,25 @@ namespace WebApplication1.Data
                  new Product { Id = 4, Name = "Lucas the spider" },
                  new Product { Id = 5, Name = "Frogger the Frogg" }
                 );
+            */
+            builder.Entity<ApplicationRole>()
+                .HasData(
+                    BuildRole(1, ApplicationRole.Administrator),
+                    BuildRole(2, ApplicationRole.Customer)
+                );
         }
-        
+
+        private static ApplicationRole BuildRole(int id, string roleName)
+        {
+            return new ApplicationRole
+            {
+                Id = id,
+                Name = roleName,
+                NormalizedName = roleName.ToUpper(),
+                ConcurrencyStamp = Guid.Empty.ToString(),
+            };
+        }
+
         public DbSet<Product> Products { get; set; }
 
         public DbSet<Category> Categories { get; set; }

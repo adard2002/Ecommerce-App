@@ -35,7 +35,7 @@ namespace WebApplication1.Services.Identity
         }
 
 
-        public async Task<ApplicationUser> Register(RegisterData data, ModelStateDictionary modelState)
+        public async Task<ApplicationUser> Register(RegisterData data, string role, ModelStateDictionary modelState)
         {
             var user = new ApplicationUser
             {
@@ -47,6 +47,7 @@ namespace WebApplication1.Services.Identity
 
             if (result.Succeeded)
             {
+                await userManager.AddToRoleAsync(user, role);
                 return user;
             }
 
@@ -59,6 +60,7 @@ namespace WebApplication1.Services.Identity
                     "";
                 modelState.AddModelError(errorKey, error.Description);
             }
+
             return null;
         }
 
@@ -87,6 +89,6 @@ namespace WebApplication1.Services.Identity
             await userManager.UpdateAsync(user);
 
         }
-        
+
     }
 }
