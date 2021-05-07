@@ -47,7 +47,19 @@ namespace WebApplication1.Services.Identity
 
             if (result.Succeeded)
             {
-                await userManager.AddToRoleAsync(user, role);
+                if (role == ApplicationRole.Administrator)
+                {
+                    var admins = await userManager.GetUsersInRoleAsync(ApplicationRole.Administrator);
+                    if (admins.Count == 0)
+                    {
+                        await userManager.AddToRoleAsync(user, role);
+                    }
+                }
+                else
+                {
+                    await userManager.AddToRoleAsync(user, role);
+                }
+                await signInManager.SignInAsync(user, false);
                 return user;
             }
 
