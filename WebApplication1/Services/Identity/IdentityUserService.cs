@@ -102,5 +102,9 @@ namespace WebApplication1.Services.Identity
 
         }
 
+        public async Task SignOut()
+        {
+            await signInManager.SignOutAsync();
+        }
     }
 }

@@ -11,6 +11,8 @@ namespace WebApplication1.Services.Identity
 
         Task<bool> SignIn(LoginData data);
 
+        Task SignOut();
+
         Task<ApplicationUser> GetCurrentUser();
         Task<ApplicationUser> GetUser(ClaimsPrincipal principal);
         Task SetCurrentProfileImageUrl(string url);
