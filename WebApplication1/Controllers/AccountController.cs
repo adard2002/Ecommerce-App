@@ -35,7 +35,7 @@ namespace WebApplication1.Controllers
                 return View(data);
             }
 
-            await userService.Register(data, ModelState);
+            await userService.Register(data, ApplicationRole.Administrator, ModelState);
 
             if (!ModelState.IsValid)
             {

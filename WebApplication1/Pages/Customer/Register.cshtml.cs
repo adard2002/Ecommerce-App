@@ -20,6 +20,7 @@ namespace WebApplication1.Pages.Customer
 
         [BindProperty]
         public RegisterData Input { get; set; }
+
         public void OnGet()
         {
         }
@@ -31,7 +32,7 @@ namespace WebApplication1.Pages.Customer
                 return Page();
             }
 
-            await userService.Register(Input, ModelState);
+            await userService.Register(Input, ApplicationRole.Customer, ModelState);
 
             if (!ModelState.IsValid)
             {

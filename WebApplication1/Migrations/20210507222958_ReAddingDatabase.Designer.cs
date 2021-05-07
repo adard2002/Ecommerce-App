@@ -10,8 +10,8 @@ using WebApplication1.Data;
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210506220826_SeedRoles")]
-    partial class SeedRoles
+    [Migration("20210507222958_ReAddingDatabase")]
+    partial class ReAddingDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -186,6 +186,22 @@ namespace WebApplication1.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
+                            Name = "Customer",
+                            NormalizedName = "CUSTOMER"
+                        });
                 });
 
             modelBuilder.Entity("WebApplication1.Models.Identity.ApplicationUser", b =>
@@ -272,28 +288,6 @@ namespace WebApplication1.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Kratos the Tiger"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Dory the fsh"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Lucas the spider"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Frogger the Frogg"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
