@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using WebApplication1.Controllers;
 using WebApplication1.Data;
 using WebApplication1.Models.Identity;
+using WebApplication1.Services;
 using WebApplication1.Services.Identity;
 
 namespace WebApplication1
@@ -51,6 +52,9 @@ namespace WebApplication1
             {
                 services.AddSingleton<IFileService, AdaraFileService>();
             }
+
+            services.AddSingleton<IEmailService, LoggerEmailService>();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
